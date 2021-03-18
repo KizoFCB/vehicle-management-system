@@ -7,14 +7,18 @@ import reportWebVitals from "./reportWebVitals";
 import Vehicle from "./components/FuelHistory/Filters/Vehicle/Vehicle";
 import Filters from "./components/FuelHistory/Filters/Filters";
 import FuelHistory from "./components/FuelHistory/FuelHistory";
+import store from "./redux/store";
+import { Provider } from "react-redux";
 
 ReactDOM.render(
-  <React.StrictMode>
-    {/* <App /> */}
-    {/* <Vehicle /> */}
-    {/* <Filters /> */}
-    <FuelHistory />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      {/* <App /> */}
+      {/* <Vehicle /> */}
+      {/* <Filters /> */}
+      <FuelHistory />
+    </React.StrictMode>
+  </Provider>,
   document.getElementById("root")
 );
 

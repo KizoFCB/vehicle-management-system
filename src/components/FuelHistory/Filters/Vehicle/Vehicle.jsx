@@ -26,6 +26,7 @@ function Vehicle() {
       </td>
       <td style={{ alignSelf: "flex-start", color: "#778CA2" }}>Time</td>
       <td style={{ alignSelf: "flex-start", color: "#778CA2" }}>Distance</td>
+      <td style={{ alignSelf: "flex-start", color: "#778CA2" }}>Cost</td>
       <td style={{ color: "#778CA2" }}>
         <div>Cost1</div>
         <div>Cost2</div>

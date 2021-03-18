@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Button,
@@ -17,7 +17,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faCaretLeft } from "@fortawesome/free-solid-svg-icons";
 
 function Filters() {
-  const vehicles = [{}, {}, {}];
+  const DatesSet = new Set();
+  const vehicles = [
+    { date: "Mon , 19 June 2019" },
+    { date: "Mon , 19 June 2020" },
+  ];
+  vehicles.map((vehicle) => DatesSet.add(vehicle.date));
+  const uniqueDates = [...DatesSet.values()];
   const timezoneOptions = [
     {
       label: (
@@ -44,17 +50,32 @@ function Filters() {
       value: "Date",
     },
   ];
-
+  console.log(uniqueDates);
   return (
-    <Container style={{ backgroundColor: "#F8FAFB" }}>
+    <Container
+      className="d-flex flex-column pl-4 pr-4 py-5"
+      style={{ backgroundColor: "#F8FAFB" }}
+    >
       <div className="d-flex flex-row justify-content-end align-items-center">
         <div>1-10 of 40</div>
 
         <ButtonGroup>
-          <Button variant="outline-light" size="lg">
+          <Button
+            as="span"
+            className="bg-white"
+            style={{ border: "1px solid #E8ECEF" }}
+            variant="light"
+            size="lg"
+          >
             <FontAwesomeIcon icon={faCaretLeft} />
           </Button>
-          <Button variant="outline-light" size="lg">
+          <Button
+            as="span"
+            className="bg-white"
+            style={{ border: "1px solid #E8ECEF" }}
+            variant="light"
+            size="lg"
+          >
             <FontAwesomeIcon icon={faCaretRight} />
           </Button>
         </ButtonGroup>
@@ -75,22 +96,28 @@ function Filters() {
               <th className="font-weight-normal">Time</th>
               <th className="font-weight-normal">Total km</th>
               <th className="font-weight-normal">Volume</th>
+              <th className="font-weight-normal">Cost</th>
               <th className="font-weight-normal">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {vehicles.map(function (vehicle) {
+            {uniqueDates.map(function (dateEntry) {
               return (
                 <>
                   <tr>
                     <td
-                      colSpan="5"
+                      colSpan="6"
                       style={{ backgroundColor: "#F8FAFB", color: "#252631" }}
                     >
-                      {moment("Mon , 19 June 2019").format()}
+                      {moment(dateEntry).format()}
                     </td>
                   </tr>
-                  <Vehicle />
+
+                  {vehicles
+                    .filter((vehicle) => vehicle.date === dateEntry)
+                    .map(function (vehicle) {
+                      return <Vehicle />;
+                    })}
                 </>
               );
             })}
