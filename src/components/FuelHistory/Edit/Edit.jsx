@@ -8,6 +8,7 @@ import {
   FormControl,
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
+import { useRef } from "react";
 import { editVehicle } from "./../../../redux/vehicles";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -19,7 +20,8 @@ function Edit(props) {
   const { id } = props;
   const vehicles = useSelector((state) => state.vehicles.vehicles);
   const dispatch = useDispatch();
-
+  const hideModal = props.onHide;
+  // const modalFocus = useRef(null);
   const vehicle = vehicles && vehicles.find((vehicle) => vehicle.id === id);
   const validationSchema = Yup.object({
     vehicle: Yup.string().required("Required"),
@@ -71,6 +73,12 @@ function Edit(props) {
   );
   const uniquePlates = [...licensePlatesSet.values()];
 
+  const handleSubmit = (values, { setSubmitting }) => {
+    console.log("The values", values);
+    dispatch(editVehicle(values));
+    setSubmitting(false);
+  };
+
   return (
     <Modal
       {...props}
@@ -87,12 +95,7 @@ function Edit(props) {
         validateOnChange={true}
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          console.log("The values", values);
-          dispatch(editVehicle(values));
-          setSubmitting(false);
-          props.onHide();
-        }}
+        onSubmit={handleSubmit}
       >
         {(props) => (
           <Modal.Body>
@@ -101,6 +104,7 @@ function Edit(props) {
                 <Row>
                   <CustomInput as="select" name="vehicle">
                     {uniquePlates.map((plate) => {
+                      console.log(props);
                       return <option value={plate}>{plate}</option>;
                     })}
                   </CustomInput>
@@ -128,10 +132,14 @@ function Edit(props) {
                 </Row>
               </Container>
               <Modal.Footer>
-                <Button variant="outline-dark" onClick={props.onHide}>
+                <Button variant="outline-dark" onClick={hideModal}>
                   Close
                 </Button>
-                <Button type="submit" disabled={!props.isValid}>
+                <Button
+                  type="submit"
+                  onClick={hideModal}
+                  disabled={!props.isValid}
+                >
                   Save
                 </Button>
               </Modal.Footer>
