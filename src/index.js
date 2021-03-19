@@ -2,20 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "./index.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import Vehicle from "./components/FuelHistory/Filters/Vehicle/Vehicle";
-import Filters from "./components/FuelHistory/Filters/Filters";
-import FuelHistory from "./components/FuelHistory/FuelHistory";
+import FuelHistory from "./components/FuelHistory/fuelHistory";
 import store from "./redux/store";
 import { Provider } from "react-redux";
 
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
-      {/* <App /> */}
-      {/* <Vehicle /> */}
-      {/* <Filters /> */}
       <FuelHistory />
     </React.StrictMode>
   </Provider>,

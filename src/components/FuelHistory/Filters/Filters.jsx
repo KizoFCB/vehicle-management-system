@@ -1,37 +1,19 @@
-import React, { useState, useEffect } from "react";
-import {
-  Container,
-  Button,
-  ButtonGroup,
-  Table,
-  Dropdown,
-  Form,
-  Image,
-  DropdownButton,
-  Card,
-} from "react-bootstrap";
-import Vehicle from "./Vehicle/Vehicle";
-import moment from "moment";
-import Select from "react-select";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from "react";
 import { faCaretRight, faCaretLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button, ButtonGroup, Card, Table, Image } from "react-bootstrap";
+import Select from "react-select";
+import moment from "moment";
 import { useSelector } from "react-redux";
+import Vehicle from "./vehicle/vehicle";
 
 function Filters() {
   const vehiclesPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const statusSortMap = { Active: 1, "In shop": 2, "Out of service": 3 };
   const [sortingType, setSortingType] = useState("");
-  console.log(sortingType);
 
   const stateVehicles = useSelector((state) => state.vehicles.vehicles);
-  // const [vehicles, setVehicles] = useState(stateVehicles);
-
-  // console.log("11111", stateVehicles, vehicles);
-  // useEffect(() => {
-  //   console.log("1222", stateVehicles);
-  //   setVehicles(stateVehicles);
-  // }, [stateVehicles]);
 
   const timezoneOptions = [
     {
@@ -79,7 +61,6 @@ function Filters() {
     },
   ];
 
-  // Logic for sorting vehicles
   const sortedVehicles = [...stateVehicles].sort(function (a, b) {
     return sortingType === "Status"
       ? statusSortMap[b.status] - statusSortMap[a.status]
@@ -90,7 +71,6 @@ function Filters() {
   sortedVehicles.map((vehicle) => DatesSet.add(vehicle.date));
   const uniqueDates = [...DatesSet.values()];
 
-  // Logic for displaying vehicles
   const indexOfLastVehicle = currentPage * vehiclesPerPage;
   const indexOfFirstVehicle = indexOfLastVehicle - vehiclesPerPage;
   const currentVehicles = sortedVehicles.slice(
@@ -98,12 +78,8 @@ function Filters() {
     indexOfLastVehicle
   );
 
-  console.log(uniqueDates);
   return (
-    <div
-      className="d-flex flex-column pl-4 pr-4 py-5"
-      style={{ backgroundColor: "#F8FAFB" }}
-    >
+    <div className="d-flex flex-column bg-default-primary pl-4 pr-4 py-5">
       <div className="d-flex flex-row justify-content-end align-items-center">
         <div>
           {indexOfFirstVehicle === 0 ? 1 : indexOfFirstVehicle}-
@@ -147,11 +123,11 @@ function Filters() {
           className="w-25 ml-3"
           options={timezoneOptions}
         />
+
         <Select
           defaultValue={sortingType}
           placeholder="Sort..."
           onChange={(option) => {
-            console.log("8888888", option.value);
             setSortingType(option.value);
             setCurrentPage(1);
           }}
@@ -159,12 +135,13 @@ function Filters() {
           options={sortingOptions}
         />
       </div>
+
       <Card>
         <Table responsive>
           <thead>
             <tr
+              className="bg-default-primary"
               style={{
-                backgroundColor: "#F8FAFB",
                 color: "#98A9BC",
               }}
             >
@@ -177,20 +154,19 @@ function Filters() {
             </tr>
           </thead>
           <tbody>
-            {uniqueDates.map(function (dateEntry) {
+            {uniqueDates.map(function (dateEntry, index) {
               return currentVehicles.some(
                 (vehicle) =>
                   new Date(vehicle.date).getTime() ===
                   new Date(dateEntry).getTime()
               ) ? (
                 <>
-                  <tr>
+                  <tr key={index}>
                     <td
                       colSpan="6"
+                      className="bg-default-primary font-weight-bold"
                       style={{
-                        backgroundColor: "#F8FAFB",
                         color: "#252631",
-                        fontWeight: "bold",
                       }}
                     >
                       {moment(dateEntry, "DD/MM/YYYY").format(
@@ -201,8 +177,8 @@ function Filters() {
 
                   {currentVehicles
                     .filter((vehicle) => vehicle.date === dateEntry)
-                    .map(function (vehicle) {
-                      return <Vehicle vehicle={vehicle} />;
+                    .map(function (vehicle, index) {
+                      return <Vehicle key={index} vehicle={vehicle} />;
                     })}
                 </>
               ) : null;

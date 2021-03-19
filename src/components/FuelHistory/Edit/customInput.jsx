@@ -1,5 +1,4 @@
 import React from "react";
-import { useField, Field, ErrorMessage } from "formik";
 import {
   FormControl,
   Col,
@@ -7,6 +6,7 @@ import {
   FormLabel,
   InputGroup,
 } from "react-bootstrap";
+import { useField, Field } from "formik";
 
 function CustomInput(props) {
   const [field, meta] = useField(props);
@@ -15,7 +15,11 @@ function CustomInput(props) {
   return (
     <Col>
       <FormGroup>
-        <FormLabel as="label" htmlFor={field.name}>
+        <FormLabel
+          className="font-default-primary"
+          as="label"
+          htmlFor={field.name}
+        >
           {field.name === "startDate" || field.name === "fuelType"
             ? field.name.charAt(0).toUpperCase() +
               field.name.slice(1, field.name.length - 4) +
@@ -55,5 +59,7 @@ function CustomInput(props) {
     </Col>
   );
 }
+
+CustomInput.defaultProps = { type: "text", name: "" };
 
 export default CustomInput;

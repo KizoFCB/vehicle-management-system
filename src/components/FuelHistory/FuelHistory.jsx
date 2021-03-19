@@ -1,7 +1,7 @@
-import { Card, Container, Row, Col } from "react-bootstrap";
-import Filters from "./Filters/Filters";
-import Navigation from "./Navigation/Navigation";
-import Header from "./Header/Header";
+import { Container, Row, Col } from "react-bootstrap";
+import Navigation from "./navigation/navigation";
+import Header from "./header/header";
+import Filters from "./Filters/filters";
 
 function FuelHistory() {
   return (

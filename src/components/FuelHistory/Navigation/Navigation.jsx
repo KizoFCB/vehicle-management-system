@@ -1,33 +1,22 @@
 import { Image } from "react-bootstrap";
 import { faCar } from "@fortawesome/free-solid-svg-icons";
 import { faFileAlt, faUser } from "@fortawesome/free-regular-svg-icons";
-import NavItem from "./NavItem";
+import NavItem from "./navItem";
 
 function Navigation() {
   return (
-    <div
-      className="d-flex flex-column justify-content-start align-items-center"
-      style={{ color: "#778CA2" }}
-    >
+    <div className="d-flex flex-column justify-content-start align-items-center font-default-primary">
       <Image src="smartselect.png" height="40" width="30" />
       <NavItem icon={faCar} title="VEHICLES" />
-      {/* <div
-        className="w-100 d-flex flex-column justify-content-start align-items-center"
-        style={{ backgroundColor: "#F8FAFB" }}
-      > */}
-
       <NavItem
-        style={{ backgroundColor: "#F8FAFB" }}
+        className="bg-default-primary"
         icon={faFileAlt}
         color="#4D7CFE"
         title="REPORT"
       />
-      {/* </div> */}
       <div>
-        {/* <div className="w-100" style={{ backgroundColor: "#F8FAFB" }}> */}
         <p>Operating Cost</p>
         <p className="font-weight-bold">Fuel History</p>
-        {/* </div> */}
         <p>Total Cost</p>
         <p>Cost/Meter</p>
         <p>Expense Summary</p>

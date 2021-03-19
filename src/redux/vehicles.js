@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import fakeVehicles from "./../fakeData";
 import moment from "moment";
+import fakeVehicles from "./../fakeData";
+
 export const vehiclesSlice = createSlice({
   name: "vehicles",
   initialState: {
@@ -21,16 +22,7 @@ export const vehiclesSlice = createSlice({
         name: plate[0] + " " + plate[1],
         licensePlate: plate[2].replace("(", "").replace(")", ""),
       };
-      console.log(
-        state.vehicles.length,
-        action.payload,
-        newVehicle,
-        index,
-        state.vehicles[index]
-      );
-      // state.vehicles.push(newVehicle);
       state.vehicles[index] = newVehicle;
-      console.log(state.vehicles[index]);
     },
     deleteVehicle: (state, action) => {
       state.vehicles = state.vehicles.filter(function (vehicle) {
@@ -40,7 +32,6 @@ export const vehiclesSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { editVehicle, deleteVehicle } = vehiclesSlice.actions;
 
 export default vehiclesSlice.reducer;

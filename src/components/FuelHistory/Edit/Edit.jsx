@@ -1,28 +1,19 @@
-import {
-  Modal,
-  Button,
-  Row,
-  Col,
-  Container,
-  Card,
-  FormControl,
-} from "react-bootstrap";
+import { Modal, Button, Row, Container } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { useRef } from "react";
-import { editVehicle } from "./../../../redux/vehicles";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
+import moment from "moment";
+import { editVehicle } from "../../../redux/vehicles";
 import * as Yup from "yup";
 import CustomInput from "./customInput";
-import Select from "react-select";
-import moment from "moment";
 
 function Edit(props) {
   const { id } = props;
   const vehicles = useSelector((state) => state.vehicles.vehicles);
+  const vehicle = vehicles && vehicles.find((vehicle) => vehicle.id === id);
+
   const dispatch = useDispatch();
   const hideModal = props.onHide;
-  // const modalFocus = useRef(null);
-  const vehicle = vehicles && vehicles.find((vehicle) => vehicle.id === id);
+
   const validationSchema = Yup.object({
     vehicle: Yup.string().required("Required"),
     startDate: Yup.date().required("Required"),
@@ -45,6 +36,7 @@ function Edit(props) {
       "",
     ]),
   });
+
   const initialValues = vehicle
     ? {
         id: vehicle && vehicle.id,
@@ -67,17 +59,17 @@ function Edit(props) {
         fuelType: "Gasoline",
       };
 
-  const licensePlatesSet = new Set();
-  vehicles.map((vehicle) =>
-    licensePlatesSet.add(`${vehicle.name} (${vehicle.licensePlate})`)
-  );
-  const uniquePlates = [...licensePlatesSet.values()];
-
   const handleSubmit = (values, { setSubmitting }) => {
     console.log("The values", values);
     dispatch(editVehicle(values));
     setSubmitting(false);
   };
+
+  const licensePlatesSet = new Set();
+  vehicles.map((vehicle) =>
+    licensePlatesSet.add(`${vehicle.name} (${vehicle.licensePlate})`)
+  );
+  const uniquePlates = [...licensePlatesSet.values()];
 
   return (
     <Modal
@@ -103,16 +95,21 @@ function Edit(props) {
               <Container>
                 <Row>
                   <CustomInput as="select" name="vehicle">
-                    {uniquePlates.map((plate) => {
-                      console.log(props);
-                      return <option value={plate}>{plate}</option>;
+                    {uniquePlates.map((plate, index) => {
+                      return (
+                        <option key={index} value={plate}>
+                          {plate}
+                        </option>
+                      );
                     })}
                   </CustomInput>
                 </Row>
+
                 <Row>
                   <CustomInput type="date" name="startDate" />
                   <CustomInput type="text" name="distance" />
                 </Row>
+
                 <Row>
                   <CustomInput type="text" name="volume" />
                   <CustomInput
@@ -150,5 +147,7 @@ function Edit(props) {
     </Modal>
   );
 }
+
+Edit.defaultProps = { id: "", onHide: () => {}, show: false };
 
 export default Edit;
