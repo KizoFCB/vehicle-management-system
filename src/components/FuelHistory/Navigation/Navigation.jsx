@@ -11,12 +11,18 @@ function Navigation() {
     >
       <Image src="smartselect.png" height="40" width="30" />
       <NavItem icon={faCar} title="VEHICLES" />
-      <div
+      {/* <div
         className="w-100 d-flex flex-column justify-content-start align-items-center"
         style={{ backgroundColor: "#F8FAFB" }}
-      >
-        <NavItem icon={faFileAlt} color="#4D7CFE" title="REPORT" />
-      </div>
+      > */}
+
+      <NavItem
+        style={{ backgroundColor: "#F8FAFB" }}
+        icon={faFileAlt}
+        color="#4D7CFE"
+        title="REPORT"
+      />
+      {/* </div> */}
       <div>
         {/* <div className="w-100" style={{ backgroundColor: "#F8FAFB" }}> */}
         <p>Operating Cost</p>

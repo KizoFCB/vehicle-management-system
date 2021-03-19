@@ -36,11 +36,11 @@ function Filters() {
   const timezoneOptions = [
     {
       label: (
-        <div className="d-flex">
-          <div>Timezone</div>
+        <div className="d-flex align-items-center">
+          <div>Timezone:</div>
           <Image
-            height="30"
-            width="40"
+            height="15"
+            width="30"
             className="ml-2"
             src="Flag_of_Egypt.png"
           />
@@ -50,6 +50,15 @@ function Filters() {
     },
   ];
   const sortingOptions = [
+    {
+      label: (
+        <div className="d-flex">
+          <div>Sort:</div>
+          <strong>All</strong>
+        </div>
+      ),
+      value: "",
+    },
     {
       label: (
         <div className="d-flex">
@@ -72,11 +81,9 @@ function Filters() {
 
   // Logic for sorting vehicles
   const sortedVehicles = [...stateVehicles].sort(function (a, b) {
-    return sortingType === "Date"
-      ? new Date(b.date) - new Date(a.date)
-      : sortingType === "Status"
+    return sortingType === "Status"
       ? statusSortMap[b.status] - statusSortMap[a.status]
-      : null;
+      : new Date(b.date) - new Date(a.date);
   });
 
   const DatesSet = new Set();
@@ -106,7 +113,7 @@ function Filters() {
           of {stateVehicles.length}
         </div>
 
-        <ButtonGroup>
+        <ButtonGroup className="ml-3">
           <Button
             as="span"
             className="bg-white"
@@ -137,7 +144,7 @@ function Filters() {
 
         <Select
           defaultValue={timezoneOptions[0]}
-          className="w-25"
+          className="w-25 ml-3"
           options={timezoneOptions}
         />
         <Select
@@ -148,7 +155,7 @@ function Filters() {
             setSortingType(option.value);
             setCurrentPage(1);
           }}
-          className="w-25"
+          className="w-25 ml-3"
           options={sortingOptions}
         />
       </div>

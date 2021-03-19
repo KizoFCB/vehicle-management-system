@@ -68,13 +68,14 @@ function Vehicle({ vehicle }) {
       <td>
         <div className="d-flex mt-3" style={{ alignSelf: "center" }}>
           <FontAwesomeIcon
-            className="mr-3"
+            className="mr-3 clickable"
             icon={faEdit}
             color="#FFAB2B"
             onClick={() => setModalShow(true)}
           />
           <FontAwesomeIcon
             icon={faTrashAlt}
+            className="clickable"
             color="#FE4D5C"
             onClick={() => dispatch(deleteVehicle({ id, date }))}
           />

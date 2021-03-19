@@ -91,6 +91,7 @@ function Edit(props) {
           console.log("The values", values);
           dispatch(editVehicle(values));
           setSubmitting(false);
+          props.onHide();
         }}
       >
         {(props) => (
@@ -111,12 +112,14 @@ function Edit(props) {
                 <Row>
                   <CustomInput type="text" name="volume" />
                   <CustomInput
-                    placeholder="Select one"
                     type="text"
                     name="fuelType"
                     as="select"
                     defaultValue=""
                   >
+                    <option hidden value="">
+                      Select one
+                    </option>
                     <option value="Gasoline">Gasoline</option>
                     <option value="Diesel">Diesel</option>
                     <option value="Bio-Diesel">Bio-Diesel</option>
@@ -128,11 +131,7 @@ function Edit(props) {
                 <Button variant="outline-dark" onClick={props.onHide}>
                   Close
                 </Button>
-                <Button
-                  type="submit"
-                  onClick={props.onHide}
-                  disabled={!props.isValid}
-                >
+                <Button type="submit" disabled={!props.isValid}>
                   Save
                 </Button>
               </Modal.Footer>
