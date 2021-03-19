@@ -1,20 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import fakeVehicles from "./../fakeData";
 export const vehiclesSlice = createSlice({
   name: "vehicles",
   initialState: {
-    vehicles: [],
+    vehicles: fakeVehicles,
   },
   reducers: {
     editVehicle: (state, action) => {
-      // const newVehicles =[];
       const vehicle = state.vehicles.find(function (vehicle) {
         return vehicle.id === action.payload.id;
       });
       state.vehicles = state.vehicles.filter(function (vehicle) {
         return vehicle.id !== action.payload.id;
       });
-      state.vehicles.push(...vehicle, ...action.payload);
+      const newVehicle = { ...vehicle, ...action.payload };
+      console.log(state.vehicles.length, action.payload, vehicle, newVehicle);
+      state.vehicles.push(newVehicle);
     },
     deleteVehicle: (state, action) => {
       state.vehicles = state.vehicles.filter(function (vehicle) {

@@ -15,13 +15,11 @@ import moment from "moment";
 import Select from "react-select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faCaretLeft } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
 
 function Filters() {
   const DatesSet = new Set();
-  const vehicles = [
-    { date: "Mon , 19 June 2019" },
-    { date: "Mon , 19 June 2020" },
-  ];
+  const vehicles = useSelector((state) => state.vehicles.vehicles);
   vehicles.map((vehicle) => DatesSet.add(vehicle.date));
   const uniqueDates = [...DatesSet.values()];
   const timezoneOptions = [
@@ -116,7 +114,7 @@ function Filters() {
                   {vehicles
                     .filter((vehicle) => vehicle.date === dateEntry)
                     .map(function (vehicle) {
-                      return <Vehicle />;
+                      return <Vehicle vehicle={vehicle} />;
                     })}
                 </>
               );
