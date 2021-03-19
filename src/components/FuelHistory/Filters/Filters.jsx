@@ -178,7 +178,7 @@ function Filters() {
                   {currentVehicles
                     .filter((vehicle) => vehicle.date === dateEntry)
                     .map(function (vehicle, index) {
-                      return <Vehicle key={index} vehicle={vehicle} />;
+                      return <Vehicle index={index} vehicle={vehicle} />;
                     })}
                 </>
               ) : null;

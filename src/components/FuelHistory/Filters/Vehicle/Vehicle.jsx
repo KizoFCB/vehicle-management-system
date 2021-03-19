@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { deleteVehicle } from "../../../../redux/vehicles";
 import Edit from "../../edit/edit";
 
-function Vehicle({ vehicle, key }) {
+function Vehicle({ vehicle, index }) {
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
   const {
@@ -26,8 +26,8 @@ function Vehicle({ vehicle, key }) {
   return (
     <Container
       as="tr"
-      key={key}
-      classname="justify-content-around align-items-baseline"
+      key={index}
+      className="justify-content-around align-items-baseline"
     >
       <td className="d-flex flex-row align-items-center">
         <Image
@@ -88,6 +88,6 @@ function Vehicle({ vehicle, key }) {
   );
 }
 
-Vehicle.defaultProps = { key: 0, vehicle: {} };
+Vehicle.defaultProps = { index: 0, vehicle: {} };
 
 export default Vehicle;

@@ -60,7 +60,6 @@ function Edit(props) {
       };
 
   const handleSubmit = (values, { setSubmitting }) => {
-    console.log("The values", values);
     dispatch(editVehicle(values));
     setSubmitting(false);
   };

@@ -1,11 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 import "bootstrap/dist/css/bootstrap.css";
 import "./index.css";
+import "./App.css";
 import reportWebVitals from "./reportWebVitals";
-import FuelHistory from "./components/FuelHistory/fuelHistory";
+import FuelHistory from "./components/fuelHistory/fuelHistory";
 import store from "./redux/store";
-import { Provider } from "react-redux";
 
 ReactDOM.render(
   <Provider store={store}>
