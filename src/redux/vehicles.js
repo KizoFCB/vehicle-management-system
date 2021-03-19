@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import fakeVehicles from "./../fakeData";
+import moment from "moment";
 export const vehiclesSlice = createSlice({
   name: "vehicles",
   initialState: {
@@ -7,15 +8,29 @@ export const vehiclesSlice = createSlice({
   },
   reducers: {
     editVehicle: (state, action) => {
-      const vehicle = state.vehicles.find(function (vehicle) {
+      const index = state.vehicles.findIndex(function (vehicle) {
         return vehicle.id === action.payload.id;
       });
-      state.vehicles = state.vehicles.filter(function (vehicle) {
-        return vehicle.id !== action.payload.id;
-      });
-      const newVehicle = { ...vehicle, ...action.payload };
-      console.log(state.vehicles.length, action.payload, vehicle, newVehicle);
-      state.vehicles.push(newVehicle);
+      const plate = action.payload.vehicle.split(" ");
+      const newVehicle = {
+        ...state.vehicles[index],
+        ...action.payload,
+        date: moment(action.payload.startDate, "YYYY-MM-DD").format(
+          "DD/MM/YYYY"
+        ),
+        name: plate[0] + " " + plate[1],
+        licensePlate: plate[2].replace("(", "").replace(")", ""),
+      };
+      console.log(
+        state.vehicles.length,
+        action.payload,
+        newVehicle,
+        index,
+        state.vehicles[index]
+      );
+      // state.vehicles.push(newVehicle);
+      state.vehicles[index] = newVehicle;
+      console.log(state.vehicles[index]);
     },
     deleteVehicle: (state, action) => {
       state.vehicles = state.vehicles.filter(function (vehicle) {

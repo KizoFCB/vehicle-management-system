@@ -10,7 +10,7 @@ function FuelHistory() {
         <Col className="pr-0">
           <Navigation />
         </Col>
-        <Container as={Col} lg={10} md={10} className="pl-0">
+        <Container as={Col} lg={10} md={10} className="pl-0 m-0">
           <Header />
           <Filters />
         </Container>

@@ -18,10 +18,21 @@ import { faCaretRight, faCaretLeft } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 
 function Filters() {
-  const DatesSet = new Set();
-  const vehicles = useSelector((state) => state.vehicles.vehicles);
-  vehicles.map((vehicle) => DatesSet.add(vehicle.date));
-  const uniqueDates = [...DatesSet.values()];
+  const vehiclesPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  const statusSortMap = { Active: 1, "In shop": 2, "Out of service": 3 };
+  const [sortingType, setSortingType] = useState("");
+  console.log(sortingType);
+
+  const stateVehicles = useSelector((state) => state.vehicles.vehicles);
+  // const [vehicles, setVehicles] = useState(stateVehicles);
+
+  // console.log("11111", stateVehicles, vehicles);
+  // useEffect(() => {
+  //   console.log("1222", stateVehicles);
+  //   setVehicles(stateVehicles);
+  // }, [stateVehicles]);
+
   const timezoneOptions = [
     {
       label: (
@@ -30,7 +41,8 @@ function Filters() {
           <Image
             height="30"
             width="40"
-            src="https://i1.wp.com/danshafarms.com/wp-content/uploads/2016/09/egypt-flag-small.png?ssl=1"
+            className="ml-2"
+            src="Flag_of_Egypt.png"
           />
         </div>
       ),
@@ -47,15 +59,52 @@ function Filters() {
       ),
       value: "Date",
     },
+    {
+      label: (
+        <div className="d-flex">
+          <div>Sort:</div>
+          <strong>Status</strong>
+        </div>
+      ),
+      value: "Status",
+    },
   ];
+
+  // Logic for sorting vehicles
+  const sortedVehicles = [...stateVehicles].sort(function (a, b) {
+    return sortingType === "Date"
+      ? new Date(b.date) - new Date(a.date)
+      : sortingType === "Status"
+      ? statusSortMap[b.status] - statusSortMap[a.status]
+      : null;
+  });
+
+  const DatesSet = new Set();
+  sortedVehicles.map((vehicle) => DatesSet.add(vehicle.date));
+  const uniqueDates = [...DatesSet.values()];
+
+  // Logic for displaying vehicles
+  const indexOfLastVehicle = currentPage * vehiclesPerPage;
+  const indexOfFirstVehicle = indexOfLastVehicle - vehiclesPerPage;
+  const currentVehicles = sortedVehicles.slice(
+    indexOfFirstVehicle,
+    indexOfLastVehicle
+  );
+
   console.log(uniqueDates);
   return (
-    <Container
+    <div
       className="d-flex flex-column pl-4 pr-4 py-5"
       style={{ backgroundColor: "#F8FAFB" }}
     >
       <div className="d-flex flex-row justify-content-end align-items-center">
-        <div>1-10 of 40</div>
+        <div>
+          {indexOfFirstVehicle === 0 ? 1 : indexOfFirstVehicle}-
+          {indexOfLastVehicle > stateVehicles.length
+            ? stateVehicles.length
+            : indexOfLastVehicle}
+          of {stateVehicles.length}
+        </div>
 
         <ButtonGroup>
           <Button
@@ -64,6 +113,9 @@ function Filters() {
             style={{ border: "1px solid #E8ECEF" }}
             variant="light"
             size="lg"
+            onClick={
+              currentPage > 1 ? () => setCurrentPage(currentPage - 1) : null
+            }
           >
             <FontAwesomeIcon icon={faCaretLeft} />
           </Button>
@@ -73,16 +125,35 @@ function Filters() {
             style={{ border: "1px solid #E8ECEF" }}
             variant="light"
             size="lg"
+            onClick={
+              currentPage * vehiclesPerPage < stateVehicles.length
+                ? () => setCurrentPage(currentPage + 1)
+                : null
+            }
           >
             <FontAwesomeIcon icon={faCaretRight} />
           </Button>
         </ButtonGroup>
 
-        <Select className="w-25" options={timezoneOptions} />
-        <Select className="w-25" options={sortingOptions} />
+        <Select
+          defaultValue={timezoneOptions[0]}
+          className="w-25"
+          options={timezoneOptions}
+        />
+        <Select
+          defaultValue={sortingType}
+          placeholder="Sort..."
+          onChange={(option) => {
+            console.log("8888888", option.value);
+            setSortingType(option.value);
+            setCurrentPage(1);
+          }}
+          className="w-25"
+          options={sortingOptions}
+        />
       </div>
       <Card>
-        <Table>
+        <Table responsive>
           <thead>
             <tr
               style={{
@@ -100,29 +171,39 @@ function Filters() {
           </thead>
           <tbody>
             {uniqueDates.map(function (dateEntry) {
-              return (
+              return currentVehicles.some(
+                (vehicle) =>
+                  new Date(vehicle.date).getTime() ===
+                  new Date(dateEntry).getTime()
+              ) ? (
                 <>
                   <tr>
                     <td
                       colSpan="6"
-                      style={{ backgroundColor: "#F8FAFB", color: "#252631" }}
+                      style={{
+                        backgroundColor: "#F8FAFB",
+                        color: "#252631",
+                        fontWeight: "bold",
+                      }}
                     >
-                      {moment(dateEntry).format()}
+                      {moment(dateEntry, "DD/MM/YYYY").format(
+                        "ddd, MMM DD, YYYY"
+                      )}
                     </td>
                   </tr>
 
-                  {vehicles
+                  {currentVehicles
                     .filter((vehicle) => vehicle.date === dateEntry)
                     .map(function (vehicle) {
                       return <Vehicle vehicle={vehicle} />;
                     })}
                 </>
-              );
+              ) : null;
             })}
           </tbody>
         </Table>
       </Card>
-    </Container>
+    </div>
   );
 }
 

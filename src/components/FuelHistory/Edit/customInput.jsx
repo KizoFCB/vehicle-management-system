@@ -10,7 +10,7 @@ import {
 
 function CustomInput(props) {
   const [field, meta] = useField(props);
-  const isError = meta.touched && meta.error;
+  const isError = meta.error ? true : false;
 
   return (
     <Col>
@@ -37,16 +37,20 @@ function CustomInput(props) {
               {props.children}
             </FormControl>
           )}
+          {field.name === "distance" || field.name === "volume" ? (
+            <InputGroup.Append>
+              <InputGroup.Text>
+                {field.name === "distance" ? "Kms" : "Ltrs"}
+              </InputGroup.Text>
+            </InputGroup.Append>
+          ) : null}
         </InputGroup>
-        {isError ? (
-          <ErrorMessage name={field.name}>
-            {(msg) => (
-              <div className="text-danger font-weight-bold font-size-1">
-                {msg}
-              </div>
-            )}
-          </ErrorMessage>
-        ) : null}
+
+        {isError && (
+          <div className="text-danger font-weight-bold font-size-1">
+            {meta.error}
+          </div>
+        )}
       </FormGroup>
     </Col>
   );

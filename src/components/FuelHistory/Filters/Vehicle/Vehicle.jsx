@@ -13,9 +13,11 @@ function Vehicle({ vehicle }) {
   const {
     pic,
     id,
+    number,
     name,
     status,
     time,
+    date,
     volume,
     distance,
     cost,
@@ -37,14 +39,27 @@ function Vehicle({ vehicle }) {
         />
         <div>
           <div>
-            [{id}] {name}
+            [{number}] {name}
           </div>
-          <div>{status}</div>
+          <div
+            style={{
+              color:
+                status === "Active"
+                  ? "#21A11E"
+                  : status === "In shop"
+                  ? "#C1931B"
+                  : "#C11B1B",
+            }}
+          >
+            {status}
+          </div>
         </div>
       </td>
       <td style={{ alignSelf: "flex-start", color: "#778CA2" }}>{time}</td>
-      <td style={{ alignSelf: "flex-start", color: "#778CA2" }}>{distance}</td>
-      <td style={{ alignSelf: "flex-start", color: "#778CA2" }}>{volume}</td>
+      <td style={{ alignSelf: "flex-start", color: "#778CA2" }}>
+        {distance} km
+      </td>
+      <td style={{ alignSelf: "flex-start", color: "#778CA2" }}>{volume} L</td>
       <td style={{ color: "#778CA2" }}>
         <div>Rp {(Math.round(cost * 100) / 100).toFixed(3)}</div>
         <div>Rp {pricePerLiter.toLocaleString()}/ltr</div>
@@ -61,7 +76,7 @@ function Vehicle({ vehicle }) {
           <FontAwesomeIcon
             icon={faTrashAlt}
             color="#FE4D5C"
-            onClick={() => dispatch(deleteVehicle({ id }))}
+            onClick={() => dispatch(deleteVehicle({ id, date }))}
           />
         </div>
         <Edit id={id} show={modalShow} onHide={() => setModalShow(false)} />
