@@ -67,10 +67,15 @@ function Filters() {
     dispatch(fetchAllVehicles());
   }, []);
 
+  function dateToNum(d) {
+    d = d.split("/");
+    return Number(d[2] + d[1] + d[0]);
+  }
+
   const sortedVehicles = [...stateVehicles].sort(function (a, b) {
     return sortingType === "Status"
-      ? statusSortMap[b.status] - statusSortMap[a.status]
-      : new Date(b.date) - new Date(a.date);
+      ? statusSortMap[a.status] - statusSortMap[b.status]
+      : dateToNum(b.date) - dateToNum(a.date);
   });
 
   const DatesSet = new Set();
