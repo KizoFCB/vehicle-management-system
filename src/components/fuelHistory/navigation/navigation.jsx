@@ -16,14 +16,12 @@ function Navigation() {
       />
       <NavItem title="Operating Cost" />
       <NavItem title="Fuel History" />
-      <div className="my-2">
-        <p>Total Cost</p>
-        <p>Cost/Meter</p>
-        <p>Expense Summary</p>
-        <p>Utilization</p>
-        <p>Maintenance</p>
-        <p>Service</p>
-      </div>
+      <NavItem title="Total Cost" />
+      <NavItem title="Cost/Meter" />
+      <NavItem title="Expense Summary" />
+      <NavItem title="Utilization" />
+      <NavItem title="Maintenance" />
+      <NavItem title="Service" />
       <NavItem icon={faUser} title="PEOPLE" />
     </div>
   );

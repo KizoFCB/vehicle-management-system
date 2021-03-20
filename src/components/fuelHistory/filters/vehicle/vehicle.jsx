@@ -34,7 +34,7 @@ function Vehicle({ vehicle, index }) {
           width={35}
           height={35}
           className="mr-3"
-          src={pic}
+          src={pic || "default_pic.png"}
           roundedCircle
         />
         <div>

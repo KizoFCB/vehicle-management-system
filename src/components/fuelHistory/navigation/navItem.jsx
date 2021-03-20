@@ -13,8 +13,8 @@ function NavItem({ icon, title, color, style }) {
 
   return (
     <div className={className} style={style}>
-      <FontAwesomeIcon color={color} className="mr-3" icon={icon} />
-      <div className="p-2">{title}</div>
+      {icon && <FontAwesomeIcon color={color} className="mr-3" icon={icon} />}
+      <div className="p-3">{title}</div>
     </div>
   );
 }
