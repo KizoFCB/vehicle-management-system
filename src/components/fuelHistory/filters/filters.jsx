@@ -91,7 +91,7 @@ function Filters() {
 
   return (
     <div className="d-flex flex-column bg-default-primary pl-4 pr-4 py-5">
-      <div className="d-flex flex-row justify-content-end align-items-center">
+      <div className="d-flex flex-row justify-content-end align-items-center mb-2">
         <div>
           {indexOfFirstVehicle === 0 ? 1 : indexOfFirstVehicle}-
           {indexOfLastVehicle > stateVehicles.length
