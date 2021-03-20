@@ -6,6 +6,17 @@
   cursor: pointer;
 }
 
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
+.vl {
+  border-left: 3px solid #4d7cfe;
+  height: 24px;
+}
+
 .flex-center-row {
   display: flex;
   flex-direction: row;
