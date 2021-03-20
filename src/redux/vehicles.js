@@ -22,6 +22,7 @@ export const vehiclesSlice = createSlice({
         name: plate[0] + " " + plate[1],
         licensePlate: plate[2].replace("(", "").replace(")", ""),
       };
+
       state.vehicles[index] = newVehicle;
     },
     deleteVehicle: (state, action) => {

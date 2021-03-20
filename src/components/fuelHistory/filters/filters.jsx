@@ -156,9 +156,7 @@ function Filters() {
           <tbody>
             {uniqueDates.map(function (dateEntry, index) {
               return currentVehicles.some(
-                (vehicle) =>
-                  new Date(vehicle.date).getTime() ===
-                  new Date(dateEntry).getTime()
+                (vehicle) => vehicle.date === dateEntry
               ) ? (
                 <>
                   <tr key={index}>
