@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { faCaretRight, faCaretLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, ButtonGroup, Card, Table, Image } from "react-bootstrap";
 import Select from "react-select";
 import moment from "moment";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchAllVehicles } from "../../../redux/vehicles";
 import Vehicle from "./vehicle/vehicle";
 
 function Filters() {
@@ -14,6 +15,7 @@ function Filters() {
   const [sortingType, setSortingType] = useState("");
 
   const stateVehicles = useSelector((state) => state.vehicles.vehicles);
+  const dispatch = useDispatch();
 
   const timezoneOptions = [
     {
@@ -60,6 +62,10 @@ function Filters() {
       value: "Status",
     },
   ];
+
+  useEffect(() => {
+    dispatch(fetchAllVehicles());
+  }, []);
 
   const sortedVehicles = [...stateVehicles].sort(function (a, b) {
     return sortingType === "Status"

@@ -1,6 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import moment from "moment";
+import { getVehicles } from "./../services/api/vehicleService";
 import fakeVehicles from "./../fakeData";
+
+export const fetchAllVehicles = createAsyncThunk(
+  "vehicles/fetchAllVehicles",
+  async () => {
+    const response = await getVehicles();
+    return response.data;
+  }
+);
 
 export const vehiclesSlice = createSlice({
   name: "vehicles",
@@ -29,6 +38,11 @@ export const vehiclesSlice = createSlice({
       state.vehicles = state.vehicles.filter(function (vehicle) {
         return vehicle.id !== action.payload.id;
       });
+    },
+  },
+  extraReducers: {
+    [fetchAllVehicles.fulfilled]: (state, action) => {
+      state.vehicles = action.payload;
     },
   },
 });
