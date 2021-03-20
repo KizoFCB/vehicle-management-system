@@ -22,6 +22,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   width: auto;
 }
 
+.border-left-none {
+  border-left: none;
+}
+
+.border-right-none {
+  border-right: none;
+}
+
 .vl {
   border-left: 3px solid #4d7cfe;
   height: 24px;

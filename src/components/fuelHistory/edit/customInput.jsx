@@ -27,6 +27,13 @@ function CustomInput(props) {
     fieldName = field.name.charAt(0).toUpperCase() + field.name.slice(1);
   }
 
+  let inputClassName = "";
+  if (field.name === "startDate") {
+    inputClassName += " border-left-none";
+  } else if (field.name === "distance" || field.name === "volume") {
+    inputClassName += " border-right-none";
+  }
+
   return (
     <Col>
       <FormGroup>
@@ -40,8 +47,8 @@ function CustomInput(props) {
         </FormLabel>
         <InputGroup>
           {field.name === "startDate" ? (
-            <InputGroup.Prepend>
-              <InputGroup.Text className="bg-white">
+            <InputGroup.Prepend className="border-right-none">
+              <InputGroup.Text className="bg-white border-right-none">
                 <FontAwesomeIcon color="#98A9BC" icon={faCalendarAlt} />
               </InputGroup.Text>
             </InputGroup.Prepend>
@@ -51,7 +58,9 @@ function CustomInput(props) {
               as={FormControl}
               {...field}
               {...props}
-              className={isError ? " is-invalid" : ""}
+              className={
+                isError ? inputClassName + " is-invalid" : inputClassName
+              }
             />
           ) : (
             <FormControl {...props} {...field}>
@@ -59,8 +68,8 @@ function CustomInput(props) {
             </FormControl>
           )}
           {field.name === "distance" || field.name === "volume" ? (
-            <InputGroup.Append>
-              <InputGroup.Text className="bg-white font-default-primary">
+            <InputGroup.Append className="border-left-none">
+              <InputGroup.Text className="bg-white font-default-primary border-left-none">
                 {field.name === "distance" ? "Kms" : "Ltrs"}
               </InputGroup.Text>
             </InputGroup.Append>
